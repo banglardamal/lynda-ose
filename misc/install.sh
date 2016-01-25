@@ -13,7 +13,7 @@ fi
 
 ## Hackish solution to support both the new and old file structure.
 ## TL;DR: the 'new style' system adds '-pi' to various files and folders.
-## See https://github.com/banglardamal/lynda-ose/pull/266
+## See https://github.com/wireload/screenly-ose/pull/266
 if [ -f "$HOME/.config/openbox/lxde-pi-rc.xml" ]; then
     SUFFIX="-pi"
 else
@@ -39,23 +39,23 @@ sudo mkdir /var/log/supervisor
 sudo mkdir -p /etc/supervisor/conf.d
 
 echo "Downloading Lynda-OSE..."
-git clone -q https://github.com/banglardamal/lynda-ose.git "$HOME/lynda" > /dev/null
+git clone -q https://github.com/banglardamal/lynda-ose.git "$HOME/screenly" > /dev/null
 
 echo "Installing more dependencies..."
-sudo pip install -r "$HOME/lynda/requirements.txt" -q > /dev/null
+sudo pip install -r "$HOME/screenly/requirements.txt" -q > /dev/null
 
-echo "Adding Lynda to X auto start..."
+echo "Adding Screenly to X auto start..."
 mkdir -p "$HOME/.config/lxsession/LXDE$SUFFIX/"
-echo "@$HOME/lynda/misc/xloader.sh" > "$HOME/.config/lxsession/LXDE$SUFFIX/autostart"
+echo "@$HOME/screenly/misc/xloader.sh" > "$HOME/.config/lxsession/LXDE$SUFFIX/autostart"
 
 echo "Increasing swap space to 500MB..."
 echo "CONF_SWAPSIZE=500" > "$HOME/dphys-swapfile"
 sudo cp /etc/dphys-swapfile /etc/dphys-swapfile.bak
 sudo mv "$HOME/dphys-swapfile" /etc/dphys-swapfile
 
-echo "Adding Lynda's config-file"
-mkdir -p "$HOME/.lynda"
-cp "$HOME/lynda/misc/screenly.conf" "$HOME/.lynda/"
+echo "Adding Screenly's config-file"
+mkdir -p "$HOME/.screenly"
+cp "$HOME/screenly/misc/screenly.conf" "$HOME/.screenly/"
 
 echo "Enabling Watchdog..."
 sudo modprobe bcm2708_wdog > /dev/null
@@ -66,21 +66,21 @@ sudo cp /etc/watchdog.conf /etc/watchdog.conf.bak
 sudo sed -e 's/#watchdog-device/watchdog-device/g' -i /etc/watchdog.conf
 sudo /etc/init.d/watchdog start
 
-echo "Adding Lynda to autostart (via Supervisord)"
-sudo ln -s "$HOME/lynda/misc/supervisor" /etc/init.d/supervisor
-sudo ln -s "$HOME/lynda/misc/supervisord.conf" /etc/supervisor/supervisord.conf
-sudo ln -s "$HOME/lynda/misc/supervisord.conf" /etc/supervisord.conf
-sudo ln -s "$HOME/lynda/misc/supervisor_screenly.conf" /etc/supervisor/conf.d/screenly.conf
+echo "Adding Screenly to autostart (via Supervisord)"
+sudo ln -s "$HOME/screenly/misc/supervisor" /etc/init.d/supervisor
+sudo ln -s "$HOME/screenly/misc/supervisord.conf" /etc/supervisor/supervisord.conf
+sudo ln -s "$HOME/screenly/misc/supervisord.conf" /etc/supervisord.conf
+sudo ln -s "$HOME/screenly/misc/supervisor_screenly.conf" /etc/supervisor/conf.d/screenly.conf
 sudo update-rc.d supervisor defaults
 sudo /etc/init.d/supervisor start > /dev/null
 
 echo "Making modifications to X..."
 [ -f "$HOME/.gtkrc-2.0" ] && rm -f "$HOME/.gtkrc-2.0"
-ln -s "$HOME/lynda/misc/gtkrc-2.0" "$HOME/.gtkrc-2.0"
+ln -s "$HOME/screenly/misc/gtkrc-2.0" "$HOME/.gtkrc-2.0"
 [ -f "$HOME/.config/openbox/lxde$SUFFIX-rc.xml" ] && \
     mv "$HOME/.config/openbox/lxde$SUFFIX-rc.xml" "$HOME/.config/openbox/lxde$SUFFIX-rc.xml.bak"
 [ -d "$HOME/.config/openbox" ] || mkdir -p "$HOME/.config/openbox"
-ln -s "$HOME/lynda/misc/lxde-rc.xml" "$HOME/.config/openbox/lxde$SUFFIX-rc.xml"
+ln -s "$HOME/screenly/misc/lxde-rc.xml" "$HOME/.config/openbox/lxde$SUFFIX-rc.xml"
 [ -f "$HOME/.config/lxpanel/LXDE$SUFFIX/panels/panel" ] && \
     mv "$HOME/.config/lxpanel/LXDE$SUFFIX/panels/panel" "$HOME/.config/lxpanel/LXDE$SUFFIX/panels/panel.bak"
 

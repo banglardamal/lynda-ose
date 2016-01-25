@@ -8,7 +8,7 @@ import subprocess
 from contextlib import contextmanager
 import datetime
 
-configdir = os.path.join(os.getenv('HOME'), '.lynda/')
+configdir = os.path.join(os.getenv('HOME'), '.screenly/')
 database = os.path.join(configdir, 'screenly.db')
 
 comma = ','.join
@@ -157,10 +157,10 @@ def migrate_drop_filename():
 
 def ensure_conf():
     """Ensure config file is in place"""
-    conf_file = os.path.join(os.getenv('HOME'), '.lynda', 'screenly.conf')
+    conf_file = os.path.join(os.getenv('HOME'), '.screenly', 'screenly.conf')
     if not os.path.isfile(conf_file):
         print "Copying in config file..."
-        example_conf = os.path.join(os.getenv('HOME'), 'lynda', 'misc', 'screenly.conf')
+        example_conf = os.path.join(os.getenv('HOME'), 'screenly', 'misc', 'screenly.conf')
         shutil.copy(example_conf, conf_file)
 
 
@@ -171,8 +171,8 @@ def fix_supervisor():
 
     # Updating symlink for supervisor
     supervisor_symlink = '/etc/supervisor/conf.d/screenly.conf'
-    old_target = '/home/pi/lynda/misc/screenly.conf'
-    new_target = '/home/pi/lynda/misc/supervisor_screenly.conf'
+    old_target = '/home/pi/screenly/misc/screenly.conf'
+    new_target = '/home/pi/screenly/misc/supervisor_screenly.conf'
 
     try:
         supervisor_target = os.readlink(supervisor_symlink)

@@ -13,17 +13,17 @@ RUN pip install -r /tmp/requirements.txt
 RUN useradd pi
 
 # Install config file and file structure
-RUN mkdir -p /home/pi/.lynda /home/pi/lynda /home/pi/lynda_assets
-COPY misc/screenly.conf /home/pi/.lynda/screenly.conf
+RUN mkdir -p /home/pi/.screenly /home/pi/screenly /home/pi/screenly_assets
+COPY misc/screenly.conf /home/pi/.screenly/screenly.conf
 RUN chown -R pi:pi /home/pi
 
 # Copy in code base
-COPY . /home/pi/lynda
+COPY . /home/pi/screenly
 
 USER pi
-WORKDIR /home/pi/lynda
+WORKDIR /home/pi/screenly
 
 EXPOSE 8080
-VOLUME /home/pi/lynda
+VOLUME /home/pi/screenly
 
 CMD python server.py

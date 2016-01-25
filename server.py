@@ -58,7 +58,7 @@ def is_up_to_date():
     Used in conjunction with check_update() in viewer.py.
     """
 
-    sha_file = path.join(settings.get_configdir(), 'latest_lynda_sha')
+    sha_file = path.join(settings.get_configdir(), 'latest_screenly_sha')
 
     # Until this has been created by viewer.py, let's just assume we're up to date.
     if not os.path.exists(sha_file):
@@ -85,7 +85,7 @@ def is_up_to_date():
 
 
 def template(template_name, **context):
-    """Lynda template response generator. Shares the
+    """Screenly template response generator. Shares the
     same function signature as Bottle's template() method
     but also injects some global context."""
 
@@ -293,11 +293,11 @@ def settings_page():
 
 @route('/system_info')
 def system_info():
-    viewer_log_file = '/tmp/lynda_viewer.log'
+    viewer_log_file = '/tmp/screenly_viewer.log'
     if path.exists(viewer_log_file):
         viewlog = check_output(['tail', '-n', '20', viewer_log_file]).split('\n')
     else:
-        viewlog = ["(no viewer log present -- is only the lynda server running?)\n"]
+        viewlog = ["(no viewer log present -- is only the screenly server running?)\n"]
 
     # Get load average from last 15 minutes and round to two digits.
     loadavg = round(getloadavg()[2], 2)

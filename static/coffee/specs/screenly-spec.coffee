@@ -37,7 +37,7 @@ describe "Screenly Open Source", ->
         mimetype: 'webpage'
         name: 'Test'
         start_date: start_date
-        uri: 'http://lynda.banglardamal.org'
+        uri: 'http://www.screenlyapp.com'
       })
 
       it "should be active if enabled and date is in range", ->
@@ -63,7 +63,7 @@ describe "Screenly Open Source", ->
           name: "Test 2"
           start_date: new Date(2011, 4, 6, 14, 20, 0, 0)
           end_date: new Date(2011, 4, 6, 14, 20, 0, 0)
-          uri: "http://www.banglardamal.org"
+          uri: "http://www.wireload.net"
         })
 
         asset.rollback()
@@ -71,7 +71,7 @@ describe "Screenly Open Source", ->
         expect(asset.get 'is_enabled').toBe true
         expect(asset.get 'name').toBe 'Test'
         expect(asset.get 'start_date').toBe start_date
-        expect(asset.get 'uri').toBe "http://lynda.banglardamal.org"
+        expect(asset.get 'uri').toBe "http://www.screenlyapp.com"
 
       it "should erase backup date after rollback", ->
         asset.set({
@@ -79,7 +79,7 @@ describe "Screenly Open Source", ->
           name: "Test 2"
           start_date: new Date(2011, 4, 6, 14, 20, 0, 0)
           end_date: new Date(2011, 4, 6, 14, 20, 0, 0)
-          uri: "http://www.banglardamal.org"
+          uri: "http://www.wireload.net"
         })
 
         asset.rollback()
@@ -87,7 +87,7 @@ describe "Screenly Open Source", ->
         expect(asset.get 'is_enabled').toBe false
         expect(asset.get 'name').toBe 'Test 2'
         expect(asset.get('start_date').toISOString()).toBe (new Date(2011, 4, 6, 14, 20, 0, 0)).toISOString()
-        expect(asset.get 'uri').toBe "http://www.banglardamal.org"
+        expect(asset.get 'uri').toBe "http://www.wireload.net"
 
 
   describe "Collections", ->
@@ -106,21 +106,21 @@ describe "Screenly Open Source", ->
           asset_id: 1
           is_enabled: true
           name: 'AAA'
-          uri: 'http://lynda.banglardamal.org',
+          uri: 'http://www.screenlyapp.com',
           play_order: 2
         })
         asset2 = new Screenly.Asset({
           asset_id: 2
           is_enabled: true
           name: 'BBB'
-          uri: 'http://lynda.banglardamal.org',
+          uri: 'http://www.screenlyapp.com',
           play_order: 1
         })
         asset3 = new Screenly.Asset({
           asset_id: 3
           is_enabled: true
           name: 'CCC'
-          uri: 'http://lynda.banglardamal.org',
+          uri: 'http://www.screenlyapp.com',
           play_order: 0
         })
 

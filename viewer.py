@@ -19,20 +19,20 @@ import db
 import assets_helper
 
 
-__author__ = "banglardamal.org"
-__copyright__ = "Copyright 2015-2016, banglardamal.org"
+__author__ = "WireLoad Inc"
+__copyright__ = "Copyright 2012-2015, WireLoad Inc"
 __license__ = "Dual License: GPLv2 and Commercial License"
 
 
 SPLASH_DELAY = 60  # secs
 EMPTY_PL_DELAY = 5  # secs
 
-BLACK_PAGE = '/tmp/lynda_html/black_page.html'
-WATCHDOG_PATH = '/tmp/lynda.watchdog'
-LYNDA_HTML = '/tmp/lynda_html/'
-LOAD_SCREEN = '/lynda/loading.jpg'  # relative to $HOME
-UZBLRC = '/lynda/misc/uzbl.rc'  # relative to $HOME
-INTRO = '/lynda/intro-template.html'
+BLACK_PAGE = '/tmp/screenly_html/black_page.html'
+WATCHDOG_PATH = '/tmp/screenly.watchdog'
+SCREENLY_HTML = '/tmp/screenly_html/'
+LOAD_SCREEN = '/screenly/loading.jpg'  # relative to $HOME
+UZBLRC = '/screenly/misc/uzbl.rc'  # relative to $HOME
+INTRO = '/screenly/intro-template.html'
 
 current_browser_url = None
 browser = None
@@ -224,13 +224,13 @@ def view_video(uri, duration):
 
 def check_update():
     """
-    Check if there is a later version of Lynda-OSE
+    Check if there is a later version of Screenly-OSE
     available. Only do this update once per day.
     Return True if up to date was written to disk,
     False if no update needed and None if unable to check.
     """
 
-    sha_file = path.join(settings.get_configdir(), 'latest_lynda_sha')
+    sha_file = path.join(settings.get_configdir(), 'latest_screenly_sha')
 
     if path.isfile(sha_file):
         sha_file_mtime = path.getmtime(sha_file)
@@ -311,7 +311,7 @@ def setup():
     load_settings()
     db_conn = db.conn(settings['database'])
 
-    sh.mkdir(LYNDA_HTML, p=True)
+    sh.mkdir(SCREENLY_HTML, p=True)
     html_templates.black_page(BLACK_PAGE)
 
 

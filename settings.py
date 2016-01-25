@@ -7,13 +7,13 @@ import ConfigParser
 import logging
 from UserDict import IterableUserDict
 
-CONFIG_DIR = '.lynda/'
+CONFIG_DIR = '.screenly/'
 CONFIG_FILE = 'screenly.conf'
 DEFAULTS = {
     'main': {
         'database': CONFIG_DIR + 'screenly.db',
         'listen': '0.0.0.0:8080',
-        'assetdir': 'lynda_assets',
+        'assetdir': 'screenly_assets',
         'use_24_hour_clock': False
     },
     'viewer': {
@@ -29,7 +29,7 @@ DEFAULTS = {
 
 # Initiate logging
 logging.basicConfig(level=logging.INFO,
-                    filename='/tmp/lynda_viewer.log',
+                    filename='/tmp/screenly_viewer.log',
                     format='%(asctime)s %(message)s',
                     datefmt='%a, %d %b %Y %H:%M:%S')
 
@@ -42,7 +42,7 @@ logging.debug('Starting viewer.py')
 
 
 class ScreenlySettings(IterableUserDict):
-    """Lynda OSE's Settings."""
+    """Screenly OSE's Settings."""
 
     def __init__(self, *args, **kwargs):
         IterableUserDict.__init__(self, *args, **kwargs)
@@ -114,4 +114,4 @@ class ScreenlySettings(IterableUserDict):
     def get_listen_port(self):
         return self['listen'].split(':')[1]
 
-settings = LyndaSettings()
+settings = ScreenlySettings()

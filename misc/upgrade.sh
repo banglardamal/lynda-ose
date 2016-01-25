@@ -1,13 +1,13 @@
 #!/bin/bash
 
-LYNDA="/home/pi/lynda"
+SCREENLY="/home/pi/screenly"
 
 echo "Upgrading Lynda OSE..."
 
 echo "Ensuring proper permission is set..."
-sudo chown -R pi:pi $LYNDA
-sudo chown -R pi:pi /home/pi/lynda_assets
-sudo chown -R pi:pi /home/pi/.lynda
+sudo chown -R pi:pi $SCREENLY
+sudo chown -R pi:pi /home/pi/screenly_assets
+sudo chown -R pi:pi /home/pi/.screenly
 
 echo "Removing feh (no longer needed)..."
 sudo apt-get -y -qq remove feh
@@ -31,24 +31,24 @@ sudo killall unclutter
 sudo sed -e 's/^#xserver-command=X$/xserver-command=X -nocursor/g' -i /etc/lightdm/lightdm.conf
 
 echo "Fetching the latest update..."
-cd $LYNDA
+cd $SCREENLY
 git pull
 
 echo "Add new supervisor to autostart..."
-sudo ln -s "$HOME/lynda/misc/supervisor" /etc/init.d/supervisor
-sudo ln -s "$HOME/lynda/misc/supervisord.conf" /etc/supervisor/supervisord.conf
-sudo ln -s "$HOME/lynda/misc/supervisord.conf" /etc/supervisord.conf
+sudo ln -s "$HOME/screenly/misc/supervisor" /etc/init.d/supervisor
+sudo ln -s "$HOME/screenly/misc/supervisord.conf" /etc/supervisor/supervisord.conf
+sudo ln -s "$HOME/screenly/misc/supervisord.conf" /etc/supervisord.conf
 sudo update-rc.d supervisor defaults
 sudo /etc/init.d/supervisor start
 
 echo "Ensuring all Python modules are installed..."
-sudo pip install -r $LYNDA/requirements.txt -q
+sudo pip install -r $SCREENLY/requirements.txt -q
 
 echo "Running migration..."
-python $LYNDA/misc/migrate.py
+python $SCREENLY/misc/migrate.py
 
 echo "Restarting app-server..."
-sudo supervisorctl restart lynda
+sudo supervisorctl restart screenly
 
 echo "Restarting X (viewer)..."
 sudo pkill -f "xloader.sh"
